@@ -5,13 +5,28 @@
 
 <?php require base_path('views/partials/banner.php'); ?>
 
-<main>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+<main class="pt-6 space-y-6">
+    <!-- Search Notes -->
+    <div class="w-full flex justify-between space-x-6 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <!-- Search Input -->
+        <form action="/notes" method="GET" class="flex-grow">
+            <input id="search" type="text" name="search" placeholder="Search notes..." value="<?= $_GET['search'] ?? '' ?>" class="w-full bg-white border border-gray-200 rounded-md outline outline-black/5 py-1.5 px-3 text-md text-gray-600 placeholder:text-gray-400" />
+        </form>
+
+        <!-- Clear Search Button -->
+        <form action="/notes" method="GET">
+            <input id="search" name="search" value="" hidden>
+            <button class="bg-red-600 hover:bg-red-400 cursor-pointer rounded-lg text-white text-sm font-semibold shadow-xs px-3 py-2">Clear Search</button>
+        </form>
+    </div>
+
+    <!-- List of Notes -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <?php if (!empty($notes)): ?>
             <?php foreach ($notes as $note) : ?>
                 <div class="relative">
-                    <div class="absolute inset-px rounded-md bg-white max-lg:rounded-lg"></div>
-                    <div class="relative flex border border-gray-200 divide-y-1 divide-gray-200 h-full flex-col overflow-hidden rounded-md max-lg:rounded-t-[calc(2rem+1px)]">
+                    <div class="relative bg-white flex border border-gray-200 divide-y-1 divide-gray-200 h-full flex-col overflow-hidden rounded-md outline outline-black/5">
                         <div class="flex justify-end align-center gap-x-2 border-none m-2">
 
                             <!-- Edit Note -->
@@ -27,9 +42,9 @@
 
                                 <!-- Submit Post ID -->
                                 <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
-                                
+
                                 <!-- Delete Button -->
-                                <button class="bg-red-400 hover:bg-red-300 text-white px-[7px] text-center items-center rounded-sm cursor-pointer">X</button>
+                                <button class="bg-red-600 hover:bg-red-400 text-white px-[7px] text-center items-center rounded-sm cursor-pointer">X</button>
                             </form>
                         </div>
                         <div class="px-8 pb-8 sm:px-10 sm:pb-10 space-y-2 h-full">
@@ -53,7 +68,6 @@
                             <p class="max-w-lg text-sm/6 text-gray-600 max-lg:text-center"><?= date_format(date_create($note['created_at']), "H:i d/m/Y") ?></p>
                         </div>
                     </div>
-                    <div class="pointer-events-none absolute inset-px rounded-md shadow-sm outline outline-black/5 max-lg:rounded-lg"></div>
                 </div>
             <?php endforeach ?>
         <?php else: ?>
