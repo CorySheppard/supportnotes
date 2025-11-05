@@ -12,6 +12,9 @@
             <!-- Hidden Form Method -->
             <input type="hidden" name="_method" value="POST">
 
+            <!-- Hidden User ID -->
+            <input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>">
+
             <div class="space-y-12">
                 <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 border-b border-gray-900/10 pb-8">
 

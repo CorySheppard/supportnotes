@@ -67,8 +67,9 @@ if ($user) {
     // Create user session variable
 
     login([
-        'username' => $username,
-        'email' => $email,
+        'id' => $user['id'],
+        'username' => $user['username'],
+        'email' => $user['email'],
     ]);
 
     header('Location: /');

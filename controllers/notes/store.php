@@ -25,10 +25,15 @@ if (! empty($errors)) {
     ]);
 }
 
-$db->query('INSERT INTO notes(username, title, content) VALUES(:username, :title, :content)', [
-    'username' => 'Cory Sheppard',
+$user = $db->query('SELECT * FROM users WHERE id = :id', [
+    'id' => $_POST['id'],
+])->fetch(); 
+
+$db->query('INSERT INTO notes(username, title, content, users_id) VALUES(:username, :title, :content, :users_id)', [
+    'username' => $user['username'],
     'title' => $_POST["title"],
     'content' => $_POST["content"],
+    'users_id' => $user['id'],
 ]);
 header("Location: /notes");
 die();

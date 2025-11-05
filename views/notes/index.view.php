@@ -22,32 +22,38 @@
     </div>
 
     <!-- List of Notes -->
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <?php if (!empty($notes)): ?>
             <?php foreach ($notes as $note) : ?>
                 <div class="relative">
                     <div class="relative bg-white flex border border-gray-200 divide-y-1 divide-gray-200 h-full flex-col overflow-hidden rounded-md outline outline-black/5">
+
+                        <!-- Note Management (edit, delete, etc.) -->
+
                         <div class="flex justify-end align-center gap-x-2 border-none m-2">
+                            <?php if ($_SESSION['user']['id'] === $note['users_id']) : ?>
 
-                            <!-- Edit Note -->
-                            <a href="/note/edit?id=<?= $note['id'] ?>">
-                                <i class="text-gray-800 hover:text-gray-600 cursor-pointer text-[22px] fa-regular fa-pen-to-square"></i>
-                            </a>
+                                <!-- Edit Note -->
+                                <a href="/note/edit?id=<?= $note['id'] ?>">
+                                    <i class="text-gray-800 hover:text-gray-600 cursor-pointer text-[22px] fa-regular fa-pen-to-square"></i>
+                                </a>
 
-                            <!-- Delete Note -->
+                                <!-- Delete Note -->
 
-                            <form method="POST" action="/notes">
-                                <!-- Hidden Form Method -->
-                                <input type="hidden" name="_method" value="DELETE">
+                                <form method="POST" action="/notes">
+                                    <!-- Hidden Form Method -->
+                                    <input type="hidden" name="_method" value="DELETE">
 
-                                <!-- Submit Post ID -->
-                                <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
+                                    <!-- Submit Post ID -->
+                                    <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
 
-                                <!-- Delete Button -->
-                                <button class="bg-red-600 hover:bg-red-400 text-white px-[7px] text-center items-center rounded-sm cursor-pointer">X</button>
-                            </form>
+                                    <!-- Delete Button -->
+                                    <button class="bg-red-600 hover:bg-red-400 text-white px-[7px] text-center items-center rounded-sm cursor-pointer">X</button>
+                                </form>
+                            <?php endif ?>
                         </div>
-                        <div class="px-8 pb-8 sm:px-10 sm:pb-10 space-y-2 h-full">
+                        <div class="px-6 <?php if ($_SESSION['user']['id'] === $note['users_id']) : ?> pb-6 <?php else : ?> py-6 <?php endif ?> sm:px-8 sm:pb-8 space-y-2 h-full">
 
                             <!-- Note Title -->
 
@@ -57,7 +63,7 @@
 
                             <p class="max-w-lg text-md text-gray-600 max-lg:text-center"><?= htmlspecialchars($note['content']) ?></p>
                         </div>
-                        <div class="flex justify-between px-8 sm:px-10 py-4">
+                        <div class="flex justify-between px-6 sm:px-8 py-4">
 
                             <!-- Note Created By -->
 

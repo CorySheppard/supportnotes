@@ -54,7 +54,9 @@ if ($user) {
         // Create user session variable (log the user in)
 
         login([
-            'email' => $email,
+            'id' => $user['id'],
+            'username' => $user['username'],
+            'email' => $user['email'],
         ]);
 
         // Redirect the user to the notes page
